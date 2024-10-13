@@ -50,10 +50,10 @@
 
 (defn make-graph
   "Generates a connected random directed graph with `N` vertices and `S` edges.
-  Optionally adds weights if `weighted` is true. Throws an exception if `S` is less than N-1 or more than N(N-1).
+  creates unweighted graph if 'weights' is false. Throws an exception if `S` is less than N-1 or more than N(N-1).
   Ensures no duplicate edges or self-loops."
   [N S & {:keys [weighted weight-floor weight-cap spanning-tree-fn]
-          :or {weighted false
+          :or {weighted true
                weight-floor 1
                weight-cap 10
                spanning-tree-fn default-spanning-tree}}]

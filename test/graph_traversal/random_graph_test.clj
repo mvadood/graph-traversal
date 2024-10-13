@@ -12,7 +12,7 @@
 
 (deftest test-make-graph-unweighted
   (testing "Generate connected unweighted random graph"
-    (let [graph (make-graph 5 6)]
+    (let [graph (make-graph 5 6 :weighted false)]
       ;; Check that the graph has 5 vertices
       (is (= 5 (count (keys graph))))
       ;; Ensure that the number of edges is 6
@@ -23,7 +23,7 @@
 
 (deftest test-make-graph-weighted
   (testing "Generate connected weighted random graph with custom weight range"
-    (let [graph (make-graph 5 6 :weighted true :weight-floor 5 :weight-cap 15)]
+    (let [graph (make-graph 5 6 :weight-floor 5 :weight-cap 15)]
       ;; Check that the graph has 5 vertices
       (is (= 5 (count (keys graph))))
       ;; Ensure that each edge has a weight in the specified range
