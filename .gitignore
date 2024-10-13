@@ -6,3 +6,5 @@ target/
 repl-history
 .lein-repl-history
 .nrepl-port
+graph.dot
+graph.png
