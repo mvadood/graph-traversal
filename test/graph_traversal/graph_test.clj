@@ -8,6 +8,13 @@
         :3 [:4],
         :4 []})
 
+;; Define a sample graph using sets for testing (This will disallow duplicate edges)
+(def G-set {:1 #{:2 :3},
+            :2 #{:4},
+            :3 #{:4},
+            :4 #{}})
+
+
 ;; Test DFS traversal
 (deftest test-dfs-traversal
   (testing "DFS traversal of a simple graph"
@@ -29,6 +36,28 @@
     (is (= (seq-graph-bfs G :3) '(:3 :4)))
     ;; When starting from :4, since it's a leaf node, the result should just be :4
     (is (= (seq-graph-bfs G :4) '(:4)))))
+
+
+;; Test DFS traversal with a set-based graph
+(deftest test-dfs-traversal-set
+  (testing "DFS traversal of a simple graph with sets"
+    (let [result (set (seq-graph-dfs G-set :1))]
+      ;; Ensure the result contains the correct nodes, order may vary
+      (is (= result #{:1 :2 :3 :4})))
+    (is (= (set (seq-graph-dfs G-set :2)) #{:2 :4}))
+    (is (= (set (seq-graph-dfs G-set :3)) #{:3 :4}))
+    (is (= (set (seq-graph-dfs G-set :4)) #{:4}))))
+
+;; Test BFS traversal with a set-based graph
+(deftest test-bfs-traversal-set
+  (testing "BFS traversal of a simple graph with sets"
+    (let [result (set (seq-graph-bfs G-set :1))]
+      ;; Ensure the result contains the correct nodes, order may vary
+      (is (= result #{:1 :2 :3 :4})))
+    (is (= (set (seq-graph-bfs G-set :2)) #{:2 :4}))
+    (is (= (set (seq-graph-bfs G-set :3)) #{:3 :4}))
+    (is (= (set (seq-graph-bfs G-set :4)) #{:4}))))
+
 
 ;; Run all the tests
 (run-tests)
