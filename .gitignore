@@ -1,0 +1,6 @@
+target/
+*.class
+*.jar
+*.log
+/.lein-failures
+repl-history
