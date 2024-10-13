@@ -94,7 +94,7 @@ lein repl
 
 ```
 
-## Graph visualisation
+## Graph Visualisation
 It is useful to visualise the generated graph to be able to visually cross-check the output of Dijkstra or the properties.
 
 1. **Generate DOT File**:
