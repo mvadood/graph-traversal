@@ -4,11 +4,11 @@ This is my go at the coding assignment for Audience Republic. I spent almost a d
 Syntax aside, these are some of the considerations I had in mind when coding this assignment:
 
 * **TDD**: There are test cases for every part, and they can run almost independently of other files.
-* I thought adding **graph visualisation** could help verify the code output, so I used Graphviz and dot files.
-* I stuck with the suggested way of defining graphs as per this reference. The only issue I see with that is the vector formulation allows **parallel edges**. This could be replaced by a set, which I showcased in `graph_test.clj`.
-* For unweighted graphs, it makes more sense to use **BFS** for calculating the shortest paths instead of **Dijkstra**. However, I've added a function in `graph.clj` to convert an unweighted graph into a weighted one (with weights = 1) so that the same shortest paths function can be used for both without modification.
-* I was curious how **exception handling** works in Clojure, so exceptions are thrown whenever the number of edges isn't within `(N, N*(N-1))`. More exceptions should be thrown for other cases, such as when floor-weight > cap_weight during random graph generation or calling the convert-to-weighted function on an already weighted graph. I need to learn more about this in production environments.
-* I wanted to see how functions can be passed around in Clojure. A good test case for this was how we can create **connected graphs**. In order to create a [weakly] connected graph, all nodes must be reachable from each other (ignoring directions). That essentially means creating a [spanning tree](https://en.wikipedia.org/wiki/Spanning_tree) first, and then adding any additional edges afterward. There are multiple ways to create a spanning tree. I have implemented one default method, which chains all nodes together sequentially. However, there are other ways to do this. For example, one way is to connect all nodes to a single node. Therefore, `make-graph` takes a `spanning-tree-fn` function as its input in case someone wants to implement a different version of the spanning tree.
+* **Graph Visualisation**: I thought adding graph visualisation could help verify the code output, so I used Graphviz and dot files.
+* **Graph Formulation**: I stuck with the suggested way of defining graphs as per this reference. The only issue I see with that is the vector formulation allows *parallel edges*. This could be replaced by a set, which I showcased in `graph_test.clj`.
+* **Unweighted Graphs**: For unweighted graphs, it makes more sense to use *BFS* for calculating the shortest paths instead of *Dijkstra*. However, I've added a function in `graph.clj` to convert an unweighted graph into a weighted one (with weights = 1) so that the same shortest paths function can be used for both without modification.
+* **Exception Handling**: I was curious how *exception handling* works in Clojure, so exceptions are thrown whenever the number of edges isn't within `(N, N*(N-1))`. More exceptions should be thrown for other cases, such as when floor-weight > cap_weight during random graph generation or calling the convert-to-weighted function on an already weighted graph. I need to learn more about this in production environments.
+* **Passing Functions**: I wanted to see how functions can be passed around in Clojure. A good test case for this was how we can create *connected graphs*. In order to create a [weakly] connected graph, all nodes must be reachable from each other (ignoring directions). That essentially means creating a [spanning tree](https://en.wikipedia.org/wiki/Spanning_tree) first, and then adding any additional edges afterward. There are multiple ways to create a spanning tree. I have implemented one default method, which chains all nodes together sequentially. However, there are other ways to do this. For example, one way is to connect all nodes to a single node. Therefore, `make-graph` takes a `spanning-tree-fn` function as its input in case someone wants to implement a different version of the spanning tree.
 
  
 
@@ -119,11 +119,14 @@ Result of `(make-graph 10 90)` / Fully connected 10-node graph
 ```
 (require '[graph-traversal.dijkstra :refer [shortest-path]])
 
-;; or pass a random-graph instead
 (def g {:1 [[:2 1] [:3 2]], :2 [[:4 4]], :3 [[:4 2]], :4 []})
 
 ;; Find the shortest path from node :1 to node :4
 (shortest-path g :1 :4)  ; => (:1 :3 :4)
+
+;; or pass a random-graph instead
+;; Exception is thrown if there were no paths between the two
+(shortest-path random-graph (first (keys random-graph)) (last (keys random-graph)))
 ```
 ## Graph Properties
 ```
