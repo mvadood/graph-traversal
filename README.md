@@ -1,5 +1,14 @@
 # Audience Republic:: Graph Traversal Coding Assignment
+This is my go at the coding assignment for Audience Republic. I spent almost a day learning about Clojure and coding the graph traversal problem in it. This is the first time I am coding in Clojure, so I had to learn about the language's general concepts first and then start coding with the help of GPT and Copilot. I'm liking how concise Clojure can be, even compared to Scala, which is where my functional programming experience comes from. While I got a chance to familiarise myself with the language, I would say it will take a couple of weeks before I feel fully confident coding in it, as the syntax is still a bit confusing to me. I can now read Clojure and make modifications to Clojure code, but when making modifications, I still need the help of GPT/Copilot.
 
+Syntax aside, these are some of the considerations I had in mind when coding this assignment:
+
+* **TDD**: There are test cases for every part, and they can run almost independently of other files.
+* I thought adding **graph visualisation** could help verify the code output, so I used Graphviz and dot files.
+* I stuck with the suggested way of defining graphs as per this reference. The only issue I see with that is the vector formulation allows **parallel edges**. This could be replaced by a set, which I showcased in `graph_test.clj`.
+* For unweighted graphs, it makes more sense to use **BFS** for calculating the shortest paths instead of **Dijkstra**. However, I've added a function in `graph.clj` to convert an unweighted graph into a weighted one (with weights = 1) so that the same shortest paths function can be used for both without modification.
+* I was curious how **exception handling** works in Clojure, so exceptions are thrown whenever the number of edges isn't within `(N, N*(N-1))`. More exceptions should be thrown for other cases, such as when floor-weight > cap_weight during random graph generation or calling the convert-to-weighted function on an already weighted graph. I need to learn more about this in production environments.
+ 
 
 # Directory Structure
 
@@ -27,8 +36,8 @@
 ## Project Setup
 1. Clone the repository:
    ```
-   git clone ...
-   cd ...
+   git clone https://github.com/mvadood/graph-traversal.git
+   cd graph-traversal
    ```
 2. Install dependencies
    ```
