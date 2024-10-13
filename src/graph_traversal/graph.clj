@@ -24,3 +24,8 @@
 (def seq-graph-bfs
   "Returns a lazy sequence of nodes in Breadth-First Search (BFS) order starting from `s`."
   (partial seq-graph clojure.lang.PersistentQueue/EMPTY))  ; BFS uses a queue
+
+(defn convert-to-weighted [g]
+  (into {} (map (fn [[k vs]]
+                  [k (map (fn [v] [v 1]) vs)])
+                g)))
