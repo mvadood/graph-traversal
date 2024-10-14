@@ -2,5 +2,9 @@ target/
 *.class
 *.jar
 *.log
-/.lein-failures
+.lein-failures
 repl-history
+.lein-repl-history
+.nrepl-port
+graph.dot
+graph.png
